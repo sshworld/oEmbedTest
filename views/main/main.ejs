@@ -1,0 +1,38 @@
+<h2>oEmbed Test</h2>
+<form class="form-inline">
+  <input class="form-control mr-sm-2" id="url" type="search" placeholder="Search" aria-label="Search">
+  <button onclick="onSearchOEmbedData()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>
+
+
+<table class="table table-striped">
+  
+  <thead>
+    <tr>
+      <th scope="col">title</th>
+      <td>df</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+    </tr>
+  </tbody>
+</table>
+
+<script>
+  function onSearchOEmbedData() {
+    fetch('/', {
+      method:'post',
+      headers: {
+        "Content-type": "application/json"
+      },
+      body : JSON.stringify({url : $('#url').val()}),
+    }).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+</script>
