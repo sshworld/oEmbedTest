@@ -1,38 +1,94 @@
-<h2>oEmbed Test</h2>
-<form class="form-inline">
-  <input class="form-control mr-sm-2" id="url" type="search" placeholder="Search" aria-label="Search">
-  <button onclick="onSearchOEmbedData()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-</form>
-
-
-<table class="table table-striped">
+<div class="container">
+  <h2 class="text-center">oEmbed Test</h2>
+  <div class="d-flex justify-content-center">
+    <input class="form-control mr-sm-2" id="url" type="search" placeholder="Search" aria-label="Search">
+    <button onclick="onSearchOEmbedData()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </div>
+  <br>
+  <div class="table-responsive">
+    <table style="table-layout: fixed; word-break:break-all;" id="searchInfo" class="table table-striped"></table>
+  </div>
   
-  <thead>
-    <tr>
-      <th scope="col">title</th>
-      <td>df</td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-    </tr>
-  </tbody>
-</table>
+</div>
+
 
 <script>
   function onSearchOEmbedData() {
-    fetch('/', {
-      method:'post',
-      headers: {
-        "Content-type": "application/json"
-      },
-      body : JSON.stringify({url : $('#url').val()}),
-    }).then(res => {
-      console.log(res)
-    }).catch(err => {
-      console.log(err)
-    })
+    fetch('/search?url=' + $('#url').val())
+      .then(res => res.json())
+      .then(json => {
+        
+        const render = document.getElementById('searchInfo');
+        render.innerHTML = "";
+
+        let data = ""
+        if(json.title != null) {
+          data += "<thead><tr><th scope='col'>title</th><td>"+ json.title + "</td></tr></thead>" 
+        }
+        data += "<tbody> <colgroup><col width='20%'/><col width='80%'/>"
+        if(json.type != null) {
+          data += "<tr><th scope='row'>type</th><td>" + json.type + "</td></tr>"
+        }
+        if(json.version != null) {
+          data += "<tr><th scope='row'>version</th><td>" + json.version + "</td></tr>"
+        }
+        if(json.provider_name != null) {
+          data += "<tr><th scope='row'>provider_name</th><td>" + json.provider_name + "</td></tr>"
+        }
+        if(json.provider_url != null) {
+          data += "<tr><th scope='row'>provider_url</th><td><a href='" + json.provider_url + "'>" + json.provider_url + "</a></td></tr>"
+        }
+        if(json.author_name != null) {
+          data += "<tr><th scope='row'>author_name</th><td>" + json.author_name + "</td></tr>"
+        }
+        if(json.author_url != null) {
+          data += "<tr><th scope='row'>author_url</th><td><a href='" + json.author_url + "'>" + json.author_url + "</a></td></tr>"
+        }
+        if(json.is_plus != null) {
+          data += "<tr><th scope='row'>is_plus</th><td>" + json.is_plus + "</td></tr>"
+        }
+        if(json.html != null) {
+          data += "<tr><th scope='row'>html(" + json.width + "/" + json.height +")</th><td><xmp style='width:100%; white-space:normal;'>" + json.html + "</xmp>" + json.html + "</td></tr>"
+        }
+        if(json.width != null) {
+          data += "<tr><th scope='row'>width</th><td>" + json.width + "</td></tr>"
+        }
+        if(json.height != null) {
+          data += "<tr><th scope='row'>height</th><td>" + json.height + "</td></tr>"
+        }
+        if(json.duration != null) {
+          data += "<tr><th scope='row'>duration</th><td>" + json.duration + "</td></tr>"
+        }
+        if(json.description != null) {
+          data += "<tr><th scope='row'>description</th><td>" + json.description + "</td></tr>"
+        }
+        if(json.thumbnail_url != null) {
+          data += "<tr><th scope='row'>thumbnail_url(" + json.thumbnail_width + "/" + json.thumbnail_height +")</th><td><a href='" + json.thumbnail_url + "'>" + json.thumbnail_url + "</a><br>"+ "<img src='"+ json.thumbnail_url + "'/>" + "</td></tr>"
+        }
+        if(json.thumbnail_width != null) {
+          data += "<tr><th scope='row'>thumbnail_width</th><td>" + json.thumbnail_width + "</td></tr>"
+        }
+        if(json.thumbnail_height != null) {
+          data += "<tr><th scope='row'>thumbnail_height</th><td>" + json.thumbnail_height + "</td></tr>"
+        }
+        if(json.thumbnail_url_with_play_button != null) {
+          data += "<tr><th scope='row'>thumbnail_url_with_play_button</th><td><a href='" + json.thumbnail_url_with_play_button + "'>" + json.thumbnail_url_with_play_button + "</a></td></tr>"
+        }
+        if(json.upload_date != null) {
+          data += "<tr><th scope='row'>upload_date</th><td>" + json.upload_date + "</td></tr>"
+        }
+        if(json.video_id != null) {
+          data += "<tr><th scope='row'>video_id</th><td>" + json.video_id + "</td></tr>"
+        }
+        if(json.uri != null) {
+          data += "<tr><th scope='row'>url</th><td>" + json.uri + "</td></tr>"
+        }
+
+        data += "</tbody>"
+        render.innerHTML = data
+
+        console.log(json)
+      })
+
   }
 </script>
