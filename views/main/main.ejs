@@ -83,6 +83,11 @@
         if(json.uri != null) {
           data += "<tr><th scope='row'>url</th><td>" + json.uri + "</td></tr>"
         }
+        if(json.error != null) {
+          for(key in json.error) {
+            data += "<tr><th scope='row'>" + key + "</th><td>" + json.error[key] + "</td></tr>"
+          }
+        }
 
         data += "</tbody>"
         render.innerHTML = data
