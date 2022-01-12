@@ -17,7 +17,7 @@
     fetch('/search?url=' + $('#url').val())
       .then(res => res.json())
       .then(json => {
-        
+        console.log(json)
         const render = document.getElementById('searchInfo');
         render.innerHTML = "";
 
@@ -87,7 +87,9 @@
         data += "</tbody>"
         render.innerHTML = data
 
-        console.log(json)
+      }).catch((err) => {
+        alert('유효하지 않은 주소입니다.');
+        console.log(err)
       })
 
   }
